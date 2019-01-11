@@ -9,6 +9,10 @@ declare(strict_types=1);
 
 namespace Zend\Diactoros;
 
+if (version_compare(phpversion(), '7.1') < 0) {
+    return;
+}
+
 use function array_key_exists;
 use function strpos;
 use function strtolower;
