@@ -9,6 +9,10 @@ declare(strict_types=1);
 
 namespace Zend\Diactoros;
 
+if (version_compare(phpversion(), '7.1') < 0) {
+    return;
+}
+
 use Psr\Http\Message\UploadedFileInterface;
 
 use function is_array;

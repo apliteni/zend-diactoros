@@ -5,9 +5,15 @@
  * @license   https://github.com/zendframework/zend-diactoros/blob/master/LICENSE.md New BSD License
  */
 
+
+
 declare(strict_types=1);
 
 namespace Zend\Diactoros;
+
+if (version_compare(phpversion(), '7.1') < 0) {
+    return;
+}
 
 use function preg_match_all;
 use function urldecode;
