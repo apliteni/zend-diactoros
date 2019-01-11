@@ -186,7 +186,7 @@ function marshalUriFromSapi(array $server, array $headers)
     $uri = $uri->withScheme($scheme);
 
     // Set the host
-    [$host, $port] = $marshalHostAndPort($headers, $server);
+    list($host, $port) = $marshalHostAndPort($headers, $server);
     if (! empty($host)) {
         $uri = $uri->withHost($host);
         if (! empty($port)) {
@@ -209,7 +209,7 @@ function marshalUriFromSapi(array $server, array $headers)
     // URI fragment
     $fragment = '';
     if (strpos($path, '#') !== false) {
-        [$path, $fragment] = explode('#', $path, 2);
+        list($path, $fragment) = explode('#', $path, 2);
     }
 
     return $uri
