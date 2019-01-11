@@ -9,10 +9,6 @@ declare(strict_types=1);
 
 namespace Zend\Diactoros;
 
-if (version_compare(phpversion(), '7.1') < 0) {
-    return;
-}
-
 use function array_key_exists;
 use function strpos;
 use function strtolower;
@@ -23,7 +19,7 @@ use function substr;
  * @param array $server Values obtained from the SAPI (generally `$_SERVER`).
  * @return array Header/value pairs
  */
-function marshalHeadersFromSapi(array $server) : array
+function marshalHeadersFromSapi(array $server)
 {
     $headers = [];
     foreach ($server as $key => $value) {

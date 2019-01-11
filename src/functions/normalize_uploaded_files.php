@@ -9,10 +9,6 @@ declare(strict_types=1);
 
 namespace Zend\Diactoros;
 
-if (version_compare(phpversion(), '7.1') < 0) {
-    return;
-}
-
 use Psr\Http\Message\UploadedFileInterface;
 
 use function is_array;
@@ -26,7 +22,7 @@ use function is_array;
  * @return UploadedFileInterface[]
  * @throws Exception\InvalidArgumentException for unrecognized values
  */
-function normalizeUploadedFiles(array $files) : array
+function normalizeUploadedFiles(array $files)
 {
     /**
      * Traverse a nested tree of uploaded file specifications.
@@ -44,7 +40,7 @@ function normalizeUploadedFiles(array $files) : array
         array $errorTree,
         array $nameTree = null,
         array $typeTree = null
-    ) use (&$recursiveNormalize) : array {
+    ) use (&$recursiveNormalize)  {
         $normalized = [];
         foreach ($tmpNameTree as $key => $value) {
             if (is_array($value)) {
@@ -83,7 +79,7 @@ function normalizeUploadedFiles(array $files) : array
      * @param array $files
      * @return UploadedFile[]
      */
-    $normalizeUploadedFileSpecification = function (array $files = []) use (&$recursiveNormalize) : array {
+    $normalizeUploadedFileSpecification = function (array $files = []) use (&$recursiveNormalize)  {
         if (! isset($files['tmp_name']) || ! is_array($files['tmp_name'])
             || ! isset($files['size']) || ! is_array($files['size'])
             || ! isset($files['error']) || ! is_array($files['error'])

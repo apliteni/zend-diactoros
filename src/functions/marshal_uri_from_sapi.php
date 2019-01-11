@@ -9,10 +9,6 @@ declare(strict_types=1);
 
 namespace Zend\Diactoros;
 
-if (version_compare(phpversion(), '7.1') < 0) {
-    return;
-}
-
 use function array_change_key_case;
 use function array_key_exists;
 use function explode;
@@ -32,7 +28,7 @@ use function substr;
  * @param array $server SAPI parameters
  * @param array $headers HTTP request headers
  */
-function marshalUriFromSapi(array $server, array $headers) : Uri
+function marshalUriFromSapi(array $server, array $headers)
 {
     /**
      * Retrieve a header value from an array of headers using a case-insensitive lookup.
@@ -41,7 +37,7 @@ function marshalUriFromSapi(array $server, array $headers) : Uri
      * @param mixed $default Default value to return if header not found
      * @return mixed
      */
-    $getHeaderFromArray = function (string $name, array $headers, $default = null) {
+    $getHeaderFromArray = function ($name, array $headers, $default = null) {
         $header  = strtolower($name);
         $headers = array_change_key_case($headers, CASE_LOWER);
         if (array_key_exists($header, $headers)) {
@@ -58,7 +54,7 @@ function marshalUriFromSapi(array $server, array $headers) : Uri
      * @return array Array of two items, host and port, in that order (can be
      *     passed to a list() operation).
      */
-    $marshalHostAndPort = function (array $headers, array $server) use ($getHeaderFromArray) : array {
+    $marshalHostAndPort = function (array $headers, array $server) use ($getHeaderFromArray) {
         /**
         * @param string|array $host
         * @return array Array of two items, host and port, in that order (can be
@@ -84,7 +80,7 @@ function marshalUriFromSapi(array $server, array $headers) : Uri
         * @return array Array of two items, host and port, in that order (can be
         *     passed to a list() operation).
         */
-        $marshalIpv6HostAndPort = function (array $server, string $host, ?int $port) : array {
+        $marshalIpv6HostAndPort = function (array $server, $host, $port) {
             $host = '[' . $server['SERVER_ADDR'] . ']';
             $port = $port ?: 80;
             if ($port . ']' === substr($host, strrpos($host, ':') + 1)) {
@@ -133,7 +129,7 @@ function marshalUriFromSapi(array $server, array $headers) : Uri
      * @copyright Copyright (c) 2005-2015 Zend Technologies USA Inc. (http://www.zend.com)
      * @license   http://framework.zend.com/license/new-bsd New BSD License
      */
-    $marshalRequestPath = function (array $server) : string {
+    $marshalRequestPath = function (array $server)  {
         // IIS7 with URL Rewrite: make sure we get the unencoded url
         // (double slash problem).
         $iisUrlRewritten = array_key_exists('IIS_WasUrlRewritten', $server) ? $server['IIS_WasUrlRewritten'] : null;
@@ -160,7 +156,7 @@ function marshalUriFromSapi(array $server, array $headers) : Uri
 
     // URI scheme
     $scheme = 'http';
-    $marshalHttpsValue = function ($https) : bool {
+    $marshalHttpsValue = function ($https)  {
         if (is_bool($https)) {
             return $https;
         }
